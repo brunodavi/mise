@@ -108,7 +108,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: https://github.com/brunodavi/mise/releases/tag/mise-latest 
           asset_path: dist/mise/bin/mise
           asset_name: mise-${{ matrix.name }}
           asset_content_type: application/octet-stream
