@@ -29,13 +29,48 @@ jobs:
       matrix:
         include:
           - os: ubuntu
-            name: linux-arm
+            name: linux-32bits-gnu
+            target: i586-unknown-linux-gnu
+            runs-on: ubuntu-latest
+
+          - os: ubuntu
+            name: linux-32bits-gnu
+            target: i586-unknown-linux-musl
+            runs-on: ubuntu-latest
+
+
+          - os: ubuntu
+            name: linux-64bits-gnu
+            target: x86_64-unknown-linux-gnu
+            runs-on: ubuntu-latest
+
+          - os: ubuntu
+            name: linux-64bits-musl
+            target: x86_64-unknown-linux-musl
+            runs-on: ubuntu-latest
+
+
+          - os: ubuntu
+            name: linux-arm64-android
+            target: aarch64-linux-androideabi
+            runs-on: ubuntu-latest
+
+          - os: ubuntu
+            name: linux-arm-android
+            target: arm-linux-androideabi
+            runs-on: ubuntu-latest
+
+
+          - os: ubuntu
+            name: linux-arm-unknown
             target: arm-unknown-linux-gnueabi
             runs-on: ubuntu-latest
+
           - os: ubuntu
-            name: linux-arm-musl
+            name: linux-arm-unknown-musl
             target: arm-unknown-linux-musleabi
             runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - uses: mozilla-actions/sccache-action@v0.0.4
@@ -56,13 +91,28 @@ jobs:
           timeout_minutes: 20
           max_attempts: 3
           command: scripts/build-tarball.sh ${{matrix.target}}
-      - uses: actions/upload-artifact@v4
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: tarball-${{matrix.target}}
-          path: |
-            dist/mise-*.tar.xz
-            dist/mise-*.tar.gz
-          if-no-files-found: error
+          tag_name: 'mise-latest'
+          release_name: 'mise-latest'
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/bin/mise
+          asset_name: mise-${{ matrix.name }}
+          asset_content_type: application/octet-stream
+
       - uses: taiki-e/install-action@v2
         with: { tool: cargo-cache }
       - if: steps.cache-crates.outputs.cache-hit != 'true'
