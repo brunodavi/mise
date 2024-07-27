@@ -101,13 +101,6 @@ fi
 
 cd dist
 
-echo -e "\nCurrent Dir: $(pwd)"
-ls
-echo -e "\nParent Dir:"
-ls ..
-echp -e "\n"
-
-
 if [[ "$os" == "macos" ]]; then
   codesign -f -s "Developer ID Application: Jeffrey Dickey (4993Y37DX6)" mise/bin/mise
 fi
