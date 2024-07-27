@@ -52,7 +52,7 @@ jobs:
 
           - os: ubuntu
             name: linux-arm64-android
-            target: aarch64-linux-androideabi
+            target: aarch64-linux-android
             runs-on: ubuntu-latest
 
           - os: ubuntu
@@ -91,17 +91,6 @@ jobs:
           timeout_minutes: 20
           max_attempts: 3
           command: scripts/build-tarball.sh ${{matrix.target}}
-
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: 'mise-latest'
-      #     release_name: 'mise-latest'
-      #     draft: false
-      #     prerelease: false
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
