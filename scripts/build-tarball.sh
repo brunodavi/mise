@@ -20,7 +20,7 @@ get_os() {
       echo "linux"
       ;;
     *)
-      error "unsupported OS: $RUST_TRIPLE"
+      echo "outher"
       ;;
   esac
 }
@@ -31,23 +31,33 @@ get_arch() {
       echo "arm64"
       ;;
     arm*)
-      echo "armv7"
+      echo "arm"
       ;;
     x86_64-*)
-      echo "x64"
+      echo "64bits"
+      ;;
+    i586-*)
+      echo "32bits"
       ;;
     universal2-*)
       echo "universal"
       ;;
     *)
-      error "unsupported arch: $RUST_TRIPLE"
+      echo "arch"
       ;;
   esac
 }
+
 get_suffix() {
   case "$RUST_TRIPLE" in
-    *-musl | *-musleabi | *-musleabihf)
+    *-android* )
+      echo "-android"
+      ;;
+    *-musl* )
       echo "-musl"
+      ;;
+    *-gnu* )
+      echo "-gnu"
       ;;
     *)
       echo ""
@@ -90,6 +100,13 @@ if [[ "$os" != "win" ]]; then
 fi
 
 cd dist
+
+echo -e "\nCurrent Dir: $(pwd)"
+ls
+echo -e "\nParent Dir:"
+ls ..
+echp -e "\n"
+
 
 if [[ "$os" == "macos" ]]; then
   codesign -f -s "Developer ID Application: Jeffrey Dickey (4993Y37DX6)" mise/bin/mise

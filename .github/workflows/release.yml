@@ -34,7 +34,7 @@ jobs:
             runs-on: ubuntu-latest
 
           - os: ubuntu
-            name: linux-32bits-gnu
+            name: linux-32bits-musl
             target: i586-unknown-linux-musl
             runs-on: ubuntu-latest
 
@@ -62,12 +62,12 @@ jobs:
 
 
           - os: ubuntu
-            name: linux-arm-unknown
+            name: linux-arm-gnu
             target: arm-unknown-linux-gnueabi
             runs-on: ubuntu-latest
 
           - os: ubuntu
-            name: linux-arm-unknown-musl
+            name: linux-arm-musl
             target: arm-unknown-linux-musleabi
             runs-on: ubuntu-latest
 
@@ -109,7 +109,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/bin/mise
+          asset_path: dist/mise/bin/mise
           asset_name: mise-${{ matrix.name }}
           asset_content_type: application/octet-stream
 
