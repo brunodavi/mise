@@ -114,4 +114,4 @@ else
   ls -oh "$basename.tar.xz"
 fi
 
-mv mise/bin/{mise,mise-$basename}
+mv mise/bin/{mise,$basename}
