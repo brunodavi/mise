@@ -113,3 +113,5 @@ else
   tar -czf "$basename.tar.gz" mise
   ls -oh "$basename.tar.xz"
 fi
+
+mv mise/bin/{mise,mise-$basename}
