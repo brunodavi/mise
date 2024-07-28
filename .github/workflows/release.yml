@@ -92,12 +92,19 @@ jobs:
           max_attempts: 3
           command: scripts/build-tarball.sh ${{matrix.target}}
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+      - name: Get release
+        id: get_release
+        html_url: https://github.com/brunodavi/mise/releases/tag/mise-latest
+        uses: bruceadams/get-release@v1.3.2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Upload release binary
+        uses: actions/upload-release-asset@v1.1.3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          upload_url: https://uploads.github.com/repos/brunodavi/mise/releases/${{ secrets.RELEASE_ID }}/assets
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: dist/mise/bin/mise
           asset_name: mise-${{ matrix.name }}
           asset_content_type: application/octet-stream
