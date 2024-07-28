@@ -54,15 +54,9 @@ jobs:
 
 
           - os: ubuntu
-            name: linux-arm64-android
-            target: aarch64-linux-android
-            runs-on: ubuntu-latest
-
-          - os: ubuntu
             name: linux-arm-android
             target: arm-linux-androideabi
             runs-on: ubuntu-latest
-
 
           - os: ubuntu
             name: linux-arm-gnu
@@ -72,6 +66,11 @@ jobs:
           - os: ubuntu
             name: linux-arm-musl
             target: arm-unknown-linux-musleabi
+            runs-on: ubuntu-latest
+
+          - os: ubuntu
+            name: linux-arm64-musl
+            target: aarch64-unknown-linux-musl
             runs-on: ubuntu-latest
 
     steps:
@@ -99,6 +98,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/mise/bin/mise*
+          tag_name: mise-latest
 
       - uses: taiki-e/install-action@v2
         with: { tool: cargo-cache }
