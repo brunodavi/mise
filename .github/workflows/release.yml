@@ -94,10 +94,11 @@ jobs:
 
       - name: Get release
         id: get_release
-        html_url: https://github.com/brunodavi/mise/releases/tag/mise-latest
         uses: bruceadams/get-release@v1.3.2
         env:
           GITHUB_TOKEN: ${{ github.token }}
+        with:
+          html_url: https://github.com/brunodavi/mise/releases/tag/mise-latest
 
       - name: Upload release binary
         uses: actions/upload-release-asset@v1.1.3
