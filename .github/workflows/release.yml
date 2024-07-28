@@ -79,13 +79,13 @@ jobs:
             runs-on: ubuntu-latest
 
           - os: ubuntu
-            name: linux-thumbv7neon-android
-            target: thumbv7neon-linux-androideabi
+            name: linux-arm-musleabi
+            target: arm-unknown-linux-musleabi
             runs-on: ubuntu-latest
 
           - os: ubuntu
-            name: linux-arm64-android
-            target: aarch64-linux-android
+            name: linux-arm-musleabihf
+            target: arm-unknown-linux-musleabihf
             runs-on: ubuntu-latest
 
     steps:
