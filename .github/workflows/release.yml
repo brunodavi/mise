@@ -97,7 +97,7 @@ jobs:
       - name: Upload release binary
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/mise/bin/mise*
+          files: dist/mise/bin/mise-*
           tag_name: mise-latest
 
       - uses: taiki-e/install-action@v2
